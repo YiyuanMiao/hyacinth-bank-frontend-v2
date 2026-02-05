@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://18.224.140.70:8090/api"; //local url
+const API_BASE_URL = "http://18.224.140.70:8090/api"; // url
 
 //const API_BASE_URL = "http://3.141.18.52:8090/api"; //prod url
 

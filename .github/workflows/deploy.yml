@@ -21,7 +21,7 @@ jobs:
         run: |
 
           npm install
-          GENERATE_SOURCEMAP=false npm run build
+          CI=false GENERATE_SOURCEMAP=false npm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
