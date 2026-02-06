@@ -32,8 +32,4 @@ jobs:
 
       - name: Sync to S3
         run: |
-          if [ -d "phegon-bank-react/build" ]; then
-            aws s3 sync phegon-bank-react/build s3://bank-bucket-cici-frontend --delete
-          else
-            aws s3 sync build s3://bank-bucket-cici-frontend --delete
-          fi
+          aws s3 sync build s3://bank-bucket-cici-frontend/v2 --delete
