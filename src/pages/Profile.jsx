@@ -28,7 +28,7 @@ const Profile = () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-          "An error occurred while fetching profile data",
+        "An error occurred while fetching profile data",
       );
     } finally {
       setLoading(false);
@@ -54,7 +54,7 @@ const Profile = () => {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-          "An error occurred while uploading profile picture",
+        "An error occurred while uploading profile picture",
       );
     } finally {
       setUploading(false);
@@ -220,7 +220,7 @@ const Profile = () => {
 
           {Array.isArray(userData.accounts) && userData.accounts.length > 0 ? (
             userData.accounts.map((account) => {
-              const accountStatusText = account?.status ?? "UNKNOWN";
+              const accountStatusText = account?.accountStatus ?? "UNKNOWN";
               const accountStatusClass = safeLower(accountStatusText);
 
               const balance = safeNumber(account?.balance, 0);
@@ -263,7 +263,7 @@ const Profile = () => {
                     <h4>Recent Transactions</h4>
 
                     {Array.isArray(account?.transactions) &&
-                    account.transactions.length > 0 ? (
+                      account.transactions.length > 0 ? (
                       <div className="transactions-list">
                         {account.transactions.slice(0, 5).map((transaction) => {
                           const txTypeText =
@@ -273,7 +273,7 @@ const Profile = () => {
                           const amount = safeNumber(transaction?.amount, 0);
                           const sign =
                             txTypeText === "WITHDRAWAL" ||
-                            txTypeText === "TRANSFER"
+                              txTypeText === "TRANSFER"
                               ? "-"
                               : "+";
 

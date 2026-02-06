@@ -28,7 +28,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          Phegon Bank
+          Hyacinth Bank
         </Link>
         <ul className="navbar-menu">
           <li className="navbar-item">
@@ -36,6 +36,7 @@ const Navbar = () => {
               Home
             </Link>
           </li>
+
           {isAuthenticated ? (
             <>
               <li className="navbar-item">
@@ -53,6 +54,7 @@ const Navbar = () => {
                   Transactions
                 </Link>
               </li>
+
               {(isAdmin || isAuditor) && (
                 <>
                   <li className="navbar-item">
@@ -60,7 +62,6 @@ const Navbar = () => {
                       Auditor Dashboard
                     </Link>
                   </li>
-
                   <li className="navbar-item">
                     <Link to="/deposit" className="navbar-link">
                       Deposit
@@ -68,6 +69,7 @@ const Navbar = () => {
                   </li>
                 </>
               )}
+
               <li className="navbar-item">
                 <button
                   className="navbar-link logout-btn"
@@ -100,10 +102,10 @@ const Navbar = () => {
             <p>Are you sure you want to logout?</p>
             <div className="modal-actions">
               <button onClick={confirmLogout} className="btn-confirm">
-                Yes
+                Logout
               </button>
               <button onClick={cancelLogout} className="btn-cancel">
-                No
+                Cancel
               </button>
             </div>
           </div>

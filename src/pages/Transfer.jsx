@@ -212,13 +212,14 @@ const Transfer = () => {
   return (
     <div className="transfer-container">
       <div className="transfer-header">
-        <h1>Make a Transfer</h1>
+        <h1>Transfer Funds</h1>
       </div>
 
       <div className="transfer-content">
         <div className="transfer-form-section">
           {error && <div className="error-message">{error}</div>}
           {success && <div className="success-message">{success}</div>}
+
           <form onSubmit={handleSubmit} className="transfer-form">
             <div className="form-group">
               <label htmlFor="accountNumber">From Account</label>
@@ -231,8 +232,7 @@ const Transfer = () => {
               >
                 {userAccounts.map((account) => (
                   <option key={account.id} value={account.accountNumber}>
-                    {account.accountNumber} - {account.accountType} (
-                    {account.currency} {account.balance.toFixed(2)})
+                    {account.accountType} - **** {account.accountNumber.slice(-4)} ({account.currency} {account.balance.toFixed(2)})
                   </option>
                 ))}
               </select>
@@ -240,48 +240,38 @@ const Transfer = () => {
 
             <div className="form-group">
               <label htmlFor="destinationAccountNumber">
-                Destination Account Number *
+                Recipient Account Number
               </label>
-              <input
-                type="text"
-                id="destinationAccountNumber"
-                name="destinationAccountNumber"
-                value={formData.destinationAccountNumber}
-                onChange={handleChange}
-                placeholder="Enter destination account number"
-                required
-              />
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <input
+                  type="text"
+                  id="destinationAccountNumber"
+                  name="destinationAccountNumber"
+                  value={formData.destinationAccountNumber}
+                  onChange={handleChange}
+                  placeholder="Enter account number"
+                  required
+                />
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={verifyDestinationAccount}
+                  disabled={verifyingAccount || !formData.destinationAccountNumber}
+                  style={{ whiteSpace: 'nowrap', padding: '0 20px', height: '48px' }}
+                >
+                  {verifyingAccount ? "..." : "Verify"}
+                </button>
+              </div>
 
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={verifyDestinationAccount}
-                disabled={
-                  verifyingAccount || !formData.destinationAccountNumber
-                }
-              >
-                {verifyingAccount ? "Verifying..." : "Verify"}
-              </button>
+              {destinationAccountInfo && (
+                <div style={{ marginTop: '8px', fontSize: '0.9rem', color: '#4a6340' }}>
+                  ✓ Verified: {destinationAccountInfo.accountType} Account ({destinationAccountInfo.accountNumber})
+                </div>
+              )}
             </div>
 
-            {destinationAccountInfo && (
-              <div className="account-info">
-                <h4>Destination Account Verified</h4>
-                <div className="account-details">
-                  <p>
-                    <strong>Account Type:</strong>{" "}
-                    {destinationAccountInfo.accountType}
-                  </p>
-                  <p>
-                    <strong>Account Number:</strong>{" "}
-                    {destinationAccountInfo.accountNumber}
-                  </p>
-                </div>
-              </div>
-            )}
-
             <div className="form-group">
-              <label htmlFor="amount">Amount *</label>
+              <label htmlFor="amount">Amount</label>
               <input
                 type="number"
                 id="amount"
@@ -293,17 +283,12 @@ const Transfer = () => {
                 step="0.01"
                 required
               />
-              {formData.amount && (
-                <div className="balance-check">
-                  <small>
-                    Available:{" "}
-                    {formatCurrency(
-                      userAccounts.find(
-                        (acc) => acc.accountNumber === formData.accountNumber,
-                      )?.balance || 0,
-                    )}
-                  </small>
-                </div>
+              {formData.accountNumber && (
+                <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
+                  Available Balance: {formatCurrency(
+                    userAccounts.find((acc) => acc.accountNumber === formData.accountNumber)?.balance || 0
+                  )}
+                </small>
               )}
             </div>
 
@@ -323,8 +308,9 @@ const Transfer = () => {
               type="submit"
               className="btn btn-primary transfer-btn"
               disabled={loading}
+              style={{ width: '100%', marginTop: '10px' }}
             >
-              {loading ? "Processing Transfer..." : "Transfer Money"}
+              {loading ? "Processing..." : "Transfer Now"}
             </button>
           </form>
         </div>
@@ -332,11 +318,10 @@ const Transfer = () => {
         <div className="transfer-guidelines">
           <h3>Transfer Guidelines</h3>
           <ul>
+            <li>Minimum transfer amount is $1.00</li>
+            <li>Maximum transfer amount is $50,000 per day</li>
             <li>Transfers are processed instantly</li>
-            <li>Ensure the destination account number is correct</li>
-            <li>Double-check the amount before confirming</li>
-            <li>Transfers cannot be reversed once processed</li>
-            <li>Contact support if you encounter any issues</li>
+            <li>Double-check recipient details before confirming</li>
           </ul>
         </div>
       </div>
