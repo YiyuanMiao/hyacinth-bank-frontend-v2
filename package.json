@@ -2,7 +2,7 @@
   "name": "bank-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://bank-bucket-cici-frontend.s3-website.us-east-2.amazonaws.com/v2/",
+  "homepage": "http://bank-bucket-cici-frontend.s3-website.us-east-2.amazonaws.com",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
